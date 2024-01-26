@@ -11,22 +11,25 @@ const App = () => {
     return (
         <AppProvider>
             <div className='container'>
-                <h1 className='mt-3'>Shopping App</h1>
+                <h1 className='mt-3'>Company's Budget Allocation</h1>
                 <div className='row mt-3'> 
+                    <div className='col-sm'>
+                        <Location />
+                    </div>
                     <div className='col-sm'>
                         <CartValue />
                     </div>
                     <div className='col-sm'>
-                        <Location />
+                        <CartValue />
                     </div>
                 </div>
-                <h3 className='mt-3'>Shopping Cart</h3>
+                <h3 className='mt-3'>Allocation</h3>
                 <div className='row '>
                     <div className='col-sm'>
                         <ExpenseList />
                     </div>
                 </div>
-                <h3 className='mt-3'>Add Items</h3>
+                <h3 className='mt-3'>Change allocation</h3>
                 <div className='row mt-3'>
                     <div className='col-sm'>
                         <ItemSelected/>
