@@ -6,33 +6,36 @@ import { FaPlusCircle } from 'react-icons/fa';
 const ExpenseItem = (props) => {
     const { dispatch, Location} = useContext(AppContext);
 
-    // const handleDeleteItem = () => {
-    //     const item = {
-    //         name: props.name,
-    //     };
-
-    //     dispatch({
-    //         type: 'DELETE_ITEM',
-    //         payload: item,
-    //     });
-    // };
-    const handleAddTen = () => {
+    const handleDeleteItem = () => {
         const item = {
             name: props.name,
         };
 
         dispatch({
-            type: 'ADD_10',
+            type: 'DELETE_ITEM',
+            payload: item,
+        });
+    };
+
+    const handleAddTen = () => {
+        const item = {
+            name: props.name,
+            budget: 10,
+        };
+
+        dispatch({
+            type: 'ADD_QUANTITY',
             payload: item,
         });
     };
     const handleDeleteTen = () => {
         const item = {
             name: props.name,
+            budget: 10
         };
 
         dispatch({
-            type: 'DELETE_10',
+            type: 'RED_QUANTITY',
             payload: item,
         });
     };
@@ -40,12 +43,11 @@ const ExpenseItem = (props) => {
 
     return (
         <tr>
-        <td>{props.name}</td>
-        <td>{props.quantity}</td>
-        {/* <td>{Location}{parseInt(props.unitprice)}</td> */}
-        {/* <td>{Location}{parseInt(props.quantity)*parseInt(props.unitprice)}</td> */}
-        <td><FaPlusCircle size='2.2em' color="green" onClick={handleAddTen}></FaPlusCircle></td>
-        <td><FaMinusCircle size='2.2em' color="darkred" onClick={handleDeleteTen}></FaMinusCircle></td>
+            <td>{props.name}</td>
+            <td>{Location}{props.budget}</td>
+            <td><FaPlusCircle size='2.2em' color="4FAC5C" onClick={handleAddTen}></FaPlusCircle></td>
+            <td><FaMinusCircle size='2.2em' color="darkred" onClick={handleDeleteTen}></FaMinusCircle></td>
+            <td style={{verticalAlign: "middle"}}><FaTimesCircle size='1.3em' color="black" onClick={handleDeleteItem}></FaTimesCircle></td>
         </tr>
     );
 };

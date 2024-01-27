@@ -2,31 +2,42 @@ import React, { useContext, useState } from 'react';
 import { AppContext } from '../context/AppContext';
 
 const ItemSelected = (props) => {
-    const { dispatch} = useContext(AppContext);
+    const { dispatch, expenses, Budget, Location} = useContext(AppContext);
+    const context = useContext(AppContext);
 
     const [name, setName] = useState('');
-    const [quantity, setQuantity] = useState('');
-    const [action, setAction] = useState('');
+    const [budget, setBudget] = useState('');
+    const [action, setAction] = useState('Add');
     
 
     const submitEvent = () => {
 
         const item = {
             name: name,
-            quantity: parseInt(quantity),
+            budget: parseInt(budget),
         };
 
-        if(action === "Reduce") {
-            dispatch({
-                type: 'RED_QUANTITY',
-                payload: item,
-            });
+        console.log('==========ITEM-SELECTED==========');  
+        console.log('context', context);  
+        console.log('item', item);  
+        console.log('action', action);  
+        console.log('==========END-ITEM-SELECTED==========');  
+
+        if(item.name === ""){
+            alert("You need to choose a Department!");
         } else {
+            if(action === "Reduce") {
+                dispatch({
+                    type: 'RED_QUANTITY',
+                    payload: item,
+                });
+            } else {
                 dispatch({
                     type: 'ADD_QUANTITY',
                     payload: item,
                 });
             }
+        }
     };
 
     return (
@@ -39,11 +50,11 @@ const ItemSelected = (props) => {
                 </div>
                 <select className="custom-select" id="inputGroupSelect01" onChange={(event) => setName(event.target.value)}>
                     <option defaultValue>Choose...</option>
-                    <option value="Shirt" name="Shirt"> Shirt</option>
-                    <option value="Dress" name="Dress">Dress</option>
-                    <option value="Jeans" name="Jeans">Jeans</option>
-                    <option value="Dinner set" name="Dinner set">Dinner set</option>
-                    <option value="Bags" name="Bags">Bags</option>
+                    {expenses.map(expense => 
+                        <option key={expense.id} value={expense.name} name={expense.name}>
+                            {expense.name}
+                        </option>                        
+                    )}
                 </select>
 
                 <div className="input-group-prepend" style={{ marginLeft: '2rem' }}>
@@ -53,18 +64,18 @@ const ItemSelected = (props) => {
                     <option defaultValue value="Add" name="Add">Add</option>
                     <option value="Reduce" name="Reduce">Reduce</option>
                 </select>  
-                <span className="eco" style={{ marginLeft: '2rem', marginRight: '8px'}}>£</span>
+                <span className="eco" style={{ marginLeft: '2rem', marginRight: '8px', padding: '0.3em'}}>{Location}</span>
 
                 <input
                     required='required'
                     type='number'
                     id='cost'
-                    value={quantity}
+                    value={budget}
                     style={{size: 10}}
-                    onChange={(event) => setQuantity(event.target.value)}>
+                    onChange={(event) => setBudget(event.target.value)}>
                 </input>
 
-                <button className="btn btn-primary" onClick={submitEvent} style={{ marginLeft: '2rem' }}>
+                <button className="btn btn-primary" onClick={submitEvent} style={{ marginLeft: '2rem' }} disabled={Budget !== 0 ? false : true}>
                     Save
                 </button>
                 </div>
